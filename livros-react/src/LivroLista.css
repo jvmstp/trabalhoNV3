@@ -1,0 +1,89 @@
+
+  /* Estilo para a barra-titulo */
+.barra-titulo {
+    position: relative;
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    bottom: 0px;
+    width: 100%;
+    z-index: 999;
+  }
+  
+  /* Estilo para os cabeçalhos da barra-titulo */
+  .categoria {
+    flex: 1;
+    text-align: center;
+  }
+  
+  /* Estilo para o quadro */
+  .quadro {
+    position: relative;
+    border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden; /* Para dar espaço para a barra-titulo */
+      top: 10px;
+  }
+  
+  /* Estilo para a tabela */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .tabela-container {
+    overflow-x: auto;
+  }
+  
+  /* Estilo para as células da tabela */
+  td, th {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    max-width: 200px; /* Defina o valor que desejar */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Estilo para linhas pares da tabela */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  table th,
+  table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+  }
+  
+  /* Estilo para os botões */
+  button {
+    background-color: #fd3939;
+    color: white;
+    padding: 3px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: solid 1px #ccc;
+    
+  }
+  
+  button:hover {
+    background-color: #fa5050;
+  }
+
+
+  /* Adicione estas classes CSS ao seu arquivo CSS ou arquivo de estilo */
+.categoria-titulo {
+    width: 40%; /* Defina a largura da coluna para 25% */
+}
+
+.categoria-resumo {
+    width: 40%; /* Defina a largura da coluna para 25% */
+}
+
+.categoria-editora {
+    width: 30%; /* Defina a largura da coluna para 25% */
+}
+
+.categoria-autores {
+    width: 20%; /* Defina a largura da coluna para 25% */
+}
