@@ -1,17 +1,17 @@
-import React from "react";
-import ControleEditora from "../classes/controle/ControleEditora";
-import Livro from "../classes/modelo/Livro";
+import React from "react"
+import  ControleEditora  from "../classes/controle/ControleEditora"
+import Livro from "../classes/modelo/Livro"
 
-// const controleEditora = new ControleEditora(); // Não é necessário instanciar aqui
+const controleEditora = new ControleEditora()
 
 interface LinhaLivroProps {
-  livro: Livro;
-  excluir: (codigo: number) => void;
+  livro: Livro
+  excluir: (codigo: number) => void
 }
 
 export const LinhaLivro: React.FC<LinhaLivroProps> = (props) => {
-  const { livro, excluir } = props;
-  const nomeEditora = ControleEditora.getNomeEditora(livro.codEditora); // Acessando como membro estático
+  const { livro, excluir } = props
+  const nomeEditora = controleEditora.getNomeEditora(livro.codEditora)
 
   return (
     <tr>
@@ -34,5 +34,5 @@ export const LinhaLivro: React.FC<LinhaLivroProps> = (props) => {
         </ul>
       </td>
     </tr>
-  );
-};
+  )
+}
