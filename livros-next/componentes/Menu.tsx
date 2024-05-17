@@ -1,27 +1,28 @@
-import React from 'react';
-import Link from 'next/link';
-import styles from '../styles/Menu.module.css';
+import React from "react"
+import Link from "next/link"
 
 export const Menu: React.FC = () => {
   return (
-    <nav className={styles.menu}>
-      <ul className={styles.nav}>
-        <li>
-          <Link href="/">
-            <a className={styles.menuLink}>Home</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/LivroLista">
-            <a className={styles.menuLink}>Catálogo</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/LivroDados">
-            <a className={styles.menuLink}>Novo</a>
-          </Link>
-        </li>
-      </ul>
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <div className="navbar-collapse">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" href="/">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" href="/LivroLista">
+              Catálogo
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" href="/LivroDados">
+              Novo
+            </Link>
+          </li>
+        </ul>
+      </div>
     </nav>
-  );
-};
+  )
+}
