@@ -8,7 +8,7 @@ export default function Home() {
       <Head>
         <title>Loja Next</title>
         <meta name="description" content="Loja de livros com Next.js" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="imagem logo url" />
       </Head>
 
       <Menu />
