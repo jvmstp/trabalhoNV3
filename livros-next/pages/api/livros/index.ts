@@ -1,15 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import  ControleLivros  from '../../../classes/controle/ControleLivros';
-
-const controleLivro = new ControleLivros();
+import { NextApiRequest, NextApiResponse } from "next"
+import  controleLivros from "../../../classes/controle/ControleLivros"
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'GET') {
-    res.status(200).json(controleLivro.obterLivros());
-  } else if (req.method === 'POST') {
-    controleLivro.incluir(req.body);
-    res.status(200).json({ message: 'Livro adicionado com sucesso' });
+  if (req.method === "GET") {
+    const livros = controleLivros.obterLivros()
+    res.status(200).json(livros)
+  } else if (req.method === "POST") {
+    const novoLivro = req.body
+    controleLivros.incluir(novoLivro)
+    res.status(200).json({ message: "Livro incluído com sucesso" })
   } else {
-    res.status(405).json({ message: 'Método não suportado' });
+    res.status(405).json({ message: "Método não permitido" })
   }
-};
+}
