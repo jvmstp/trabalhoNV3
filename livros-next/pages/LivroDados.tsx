@@ -1,119 +1,111 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
-import { Menu } from '../componentes/Menu';
-import styles from '../styles/Home.module.css';
-import  ControleEditora  from '../classes/controle/ControleEditora';
-import  Editora  from '../classes/modelo/Editora'; // Importe o tipo Editora
+import { useState } from "react"
+import { useRouter } from "next/router"
+import  ControleEditora  from "../classes/controle/ControleEditora"
+import Livro from "../classes/modelo/Livro"
+import { Menu } from "../componentes/Menu"
+import Head from "next/head"
+import styles from "../styles/Menu.module.css"
 
-interface Livro {
-  codigo: number;
-  titulo: string;
-  resumo: string;
-  autores: string[];
-  codEditora: number;
-}
+const LivroDados = () => {
+  const controleEditora = new ControleEditora()
+  const opcoes = controleEditora.getEditoras().map((editora) => ({
+    value: editora.codEditora,
+    text: editora.nome,
+  }))
+  const [titulo, setTitulo] = useState("")
+  const [resumo, setResumo] = useState("")
+  const [autores, setAutores] = useState("")
+  const [codEditora, setCodEditora] = useState(opcoes[0].value)
+  const navigate = useRouter().push
 
+  const baseURL = "http://localhost:3000/api/livros"
 
-
-const baseURL = "http://localhost:3000/api/livros";
-
-const incluirLivro = async (livro: Livro): Promise<boolean> => {
-  const response = await fetch(baseURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(livro),
-  });
-  return response.ok;
-};
-
-export default function LivroDados() {
-  const router = useRouter();
-  const [titulo, setTitulo] = useState("");
-  const [resumo, setResumo] = useState("");
-  const [autores, setAutores] = useState("");
-  const [codEditora, setCodEditora] = useState(0);
-  const [opcoes, setOpcoes] = useState<ControleEditora[]>([]);
-  const controleEditora = new ControleEditora();
-
-
-
-
-  useEffect(() => {
-    const editoras: Editora[] = controleEditora.getEditoras();
-    setOpcoes(editoras);
-  }, []);
+  const incluirLivro = async (livro: Livro) => {
+    const response = await fetch(baseURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(livro),
+    })
+    return response.ok
+  }
 
   const tratarCombo = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCodEditora(Number(event.target.value));
-  };
+    setCodEditora(Number(event.target.value))
+  }
 
-  const incluir = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const livro: Livro = {
-      codigo: 0,
-      titulo: titulo,
-      resumo: resumo,
-      autores: autores.split('\n'),
-      codEditora: codEditora,
-    };
-
-    incluirLivro(livro)
-      .then(() => router.push('/LivroLista'));
-  };
+  const incluir = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const livro = new Livro(0, codEditora, titulo, resumo, autores.split("\n"))
+    const incluiu = await incluirLivro(livro)
+    if (incluiu) {
+      navigate("/LivroLista")
+    }
+  }
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>LivroDados | Loja Next</title>
-        <meta name="description" content="LivroDados Page" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Adicionar Livro</title>
       </Head>
-
-      <header className={styles.navbar}>
-        <Menu />
-      </header>
-
+      <Menu />
       <main className={styles.main}>
-        <h2 className={styles.blackText}>Dados do Livro</h2>
-        <form
-          onSubmit={incluir}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            margin: '0 auto',
-            maxWidth: '300px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-            <label htmlFor="titulo" className={styles.blackText}>Título:</label>
-            <input type="text" id="titulo" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-            <label htmlFor="resumo" className={styles.blackText}>Resumo:</label>
-            <textarea id="resumo" value={resumo} onChange={(e) => setResumo(e.target.value)} rows={3} />
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-            <label htmlFor="autores" className={styles.blackText}>Autores:</label>
-            <textarea id="autores" value={autores} onChange={(e) => setAutores(e.target.value)} />
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-            <label htmlFor="editora" className={styles.blackText}>Editora:</label>
-            <select value={codEditora} onChange={tratarCombo}>
-              {opcoes.map((editora, index) => (
-                <option key={index} value={editora.codEditora}>{editora.nome}</option>
-              ))}
-            </select>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
-            <button type="submit" style={{ width: '100px' }}>Salvar Dados</button>
-          </div>
-        </form>
+        <div className="container justify-content-center">
+          <h1 className={styles.title}>Adicionar Livro</h1>
+
+          <form onSubmit={incluir}>
+            <div className="form-group">
+              <label htmlFor="titulo">Título:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="titulo"
+                value={titulo}
+                onChange={(event) => setTitulo(event.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="resumo">Resumo:</label>
+              <textarea
+                id="resumo"
+                className="form-control"
+                value={resumo}
+                onChange={(event) => setResumo(event.target.value)}
+              ></textarea>
+            </div>
+            <div className="form-group">
+              <label htmlFor="editora">Editora:</label>
+              <select
+                className="form-control"
+                id="editora"
+                value={codEditora}
+                onChange={tratarCombo}
+              >
+                {opcoes.map((opcao) => (
+                  <option key={opcao.value} value={opcao.value}>
+                    {opcao.text}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="autores">Autores:</label>
+              <textarea
+                className="form-control"
+                id="autores"
+                value={autores}
+                onChange={(event) => setAutores(event.target.value)}
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary mt-2">
+              Salvar Dados
+            </button>
+          </form>
+        </div>
       </main>
     </div>
-  );
+  )
 }
+
+export default LivroDados
