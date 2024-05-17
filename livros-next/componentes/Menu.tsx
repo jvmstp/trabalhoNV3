@@ -12,7 +12,7 @@ export const Menu: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" href="/LivroLista">
+            <Link className="nav-link" href="/LivrosLista">
               Catálogo
             </Link>
           </li>
