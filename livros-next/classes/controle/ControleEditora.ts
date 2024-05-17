@@ -1,23 +1,32 @@
-import { ReactNode } from 'react';
-import Editora from '../modelo/Editora';
+import Editora from "../modelo/Editora"
 
-const editoras: Editora[] = [
-    new Editora(1, "Alta Books"),
-    new Editora(2, "Pearson"),
-    new Editora(3, "Addison Wesley")
-];
+const editoras: Array<Editora> = [
+  {
+    codEditora: 1,
+    nome: "Alta Books",
+  },
+  {
+    codEditora: 2,
+    nome: "Pearson",
+  },
+  {
+    codEditora: 3,
+    nome: "Addison Wesley",
+  },
+]
 
-class ControleEditora {
-    codEditora: string | number | readonly string[] | undefined;
-  nome: ReactNode;
-    getNomeEditora(codEditora: number): string {
-        const editora = editoras.find(e => e.codEditora === codEditora);
-        return editora ? editora.nome : "";
-    }
+export default class ControleEditora {
+  static getNomeEditora: any
+  static getEditoras: any
+  public getNomeEditora(codEditora: number) {
+    const resultados = editoras.filter(
+      (editora) => editora.codEditora === codEditora
+    )
+    if (resultados.length === 0) return "Editora não encontrada"
+    return resultados[0].nome
+  }
 
-    getEditoras(): Editora[] {
-        return editoras;
-    }
+  public getEditoras() {
+    return editoras
+  }
 }
-
-export default ControleEditora;
