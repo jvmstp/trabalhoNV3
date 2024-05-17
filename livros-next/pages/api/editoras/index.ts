@@ -1,20 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import  ControleEditora  from '../../../classes/controle/ControleEditora'
+import { NextApiRequest, NextApiResponse } from "next"
+import  controleEditora  from "../../../classes/controle/ControleEditora"
 
-const controleEditora = new ControleEditora()
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-        switch (req.method) {
-            case 'GET':
-                const editoras = controleEditora.getEditoras()
-                res.status(200).json(editoras)
-                break
-            default:
-                res.setHeader('Allow', ['GET'])
-                res.status(405).end(`Method ${req.method} Not Allowed`)
-        }
-    } catch (e: any) { // Aqui especificamos 'any' para o tipo de erro
-        res.status(500).json({ statusCode: 500, message: e.message })
-    }
+export default (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method === "GET") {
+    const editoras = controleEditora.getEditoras()
+    res.status(200).json(editoras)
+  } else {
+    res.status(405).json({ message: "Método não permitido" })
+  }
 }
