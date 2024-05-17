@@ -1,4 +1,4 @@
-import Editora from "../modelo/Editora"
+import Editora from "../modelo/Editora";
 
 const editoras: Array<Editora> = [
   {
@@ -13,20 +13,18 @@ const editoras: Array<Editora> = [
     codEditora: 3,
     nome: "Addison Wesley",
   },
-]
+];
 
 export default class ControleEditora {
-  static getNomeEditora: any
-  static getEditoras: any
-  public getNomeEditora(codEditora: number) {
+  public getNomeEditora(codEditora: number): string {
     const resultados = editoras.filter(
       (editora) => editora.codEditora === codEditora
-    )
-    if (resultados.length === 0) return "Editora não encontrada"
-    return resultados[0].nome
+    );
+    if (resultados.length === 0) return "Editora não encontrada";
+    return resultados[0].nome;
   }
 
-  public getEditoras() {
-    return editoras
+  public getEditoras(): Array<Editora> {
+    return editoras;
   }
 }
