@@ -1,9 +1,8 @@
-import React from 'react';
-import  {Livro}  from '../classes/modelo/Livro';
-import  ControleEditora  from '../classes/controle/ControleEditora';
-import styles from '../styles/LinhaLivro.module.css';
+import React from "react";
+import ControleEditora from "../classes/controle/ControleEditora";
+import Livro from "../classes/modelo/Livro";
 
-const controleEditora = new ControleEditora();
+// const controleEditora = new ControleEditora(); // Não é necessário instanciar aqui
 
 interface LinhaLivroProps {
   livro: Livro;
@@ -12,23 +11,27 @@ interface LinhaLivroProps {
 
 export const LinhaLivro: React.FC<LinhaLivroProps> = (props) => {
   const { livro, excluir } = props;
-
-  const autoresList = livro.autores.map((autor, index) => (
-    <li key={index}>{autor}</li>
-  ));
+  const nomeEditora = ControleEditora.getNomeEditora(livro.codEditora); // Acessando como membro estático
 
   return (
     <tr>
       <td>
-        <div className={styles.livroInfo}>
-          <h3>{livro.titulo}</h3>
-          <button onClick={() => excluir(livro.codigo)} className={styles.excluir}>Excluir</button>
-        </div>
+        {livro.titulo}
+        <button
+          className="btn btn-danger d-flex"
+          onClick={() => excluir(livro.codigo)}
+        >
+          Excluir
+        </button>
       </td>
-      <td>{controleEditora.getNomeEditora(livro.codEditora)}</td>
       <td>{livro.resumo}</td>
+      <td>{nomeEditora}</td>
       <td>
-        <ul>{autoresList}</ul>
+        <ul>
+          {livro.autores.map((autor, index) => (
+            <li key={index}>{autor}</li>
+          ))}
+        </ul>
       </td>
     </tr>
   );
